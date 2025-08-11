@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.chatRouter = void 0;
+const express_1 = require("express");
+const asyncHandler_1 = require("../utils/asyncHandler");
+const auth_1 = require("../middleware/auth");
+const chatController_1 = require("../controllers/chatController");
+exports.chatRouter = (0, express_1.Router)();
+exports.chatRouter.get("/conversations", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(chatController_1.listConversations));
+exports.chatRouter.get("/messages/:userId", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(chatController_1.listMessages));
+exports.chatRouter.post("/messages/:userId", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(chatController_1.sendMessage));

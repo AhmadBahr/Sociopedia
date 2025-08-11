@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.postRouter = void 0;
+const express_1 = require("express");
+const asyncHandler_1 = require("../utils/asyncHandler");
+const auth_1 = require("../middleware/auth");
+const postController_1 = require("../controllers/postController");
+const upload_1 = require("../middleware/upload");
+exports.postRouter = (0, express_1.Router)();
+exports.postRouter.get("/feed", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(postController_1.getFeed));
+exports.postRouter.post("/", auth_1.requireAuth, upload_1.upload.single("image"), (0, asyncHandler_1.asyncHandler)(postController_1.createPost));
+exports.postRouter.post("/:id/like", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(postController_1.toggleLike));
+exports.postRouter.post("/:id/comments", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(postController_1.addComment));
+exports.postRouter.get("/user/:userId", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(postController_1.getUserPosts));
+exports.postRouter.delete("/:id", auth_1.requireAuth, (0, asyncHandler_1.asyncHandler)(postController_1.deletePost));
